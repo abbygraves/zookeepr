@@ -40,10 +40,16 @@ function filterByQuery(query, animalsArray) {
     filteredResults = filteredResults.filter(animal => animal.name === query.name);
   }
   return filteredResults;
-}
+};
 
 
+function findById(id, animalsArray) {
+  const result = animalsArray.filter(animal => animal.id === id)[0];
+  return result;
+};
 
+
+// GET ROUTES
 app.get('/api/animals', (req, res) => {
   let results = animals;
   if (req.query) {
@@ -53,6 +59,19 @@ app.get('/api/animals', (req, res) => {
 });
 
 
+app.get('/api/animals/:id', (req, res) => {
+  const result = findById(req.params.id, animals);
+  if (result) {
+    res.json(result);
+  } else {
+    res.sendStatus(404);
+  }
+});
+
+
+
+
+// LISTEN ROUTES
 app.listen(PORT, () => {
   console.log('API server now on port ${PORT}!');
 });
