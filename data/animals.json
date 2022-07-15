@@ -135,6 +135,17 @@
         "hungry"
       ],
       "id": "13"
+    },
+    {
+      "name": "Moo",
+      "species": "Dog",
+      "diet": "carnivore",
+      "personalityTraits": [
+        "zany",
+        "loving",
+        "goofy"
+      ],
+      "id": "14"
     }
   ]
 }

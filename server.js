@@ -5,11 +5,12 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 app.use(express.urlencoded({ extended: true }));  // ⬅︎ parse incoming string or array data
 app.use(express.json());  // ⬅︎ parse incoming JSON data
+app.use(express.static('public'));
 const { animals } = require('./data/animals');
 
 // —————————————————————————————————————————————————————————————————————————————————————————————
 
-// ⬇︎ FUNCTIONS/METHODS
+// ⬇︎ FUNCTIONS/METHODS ⬇︎
 function filterByQuery(query, animalsArray) {
   let personalityTraitsArray = [];
   // Note that we save the animalsArray as filteredResults here:
@@ -81,7 +82,7 @@ function validateAnimal(animal) {
 
 // —————————————————————————————————————————————————————————————————————————————————————————————
 
-// ⬇︎ GET ROUTES
+// ⬇︎ GET ROUTES ⬇︎
 app.get('/api/animals', (req, res) => {
   let results = animals;
   if (req.query) {
@@ -115,10 +116,31 @@ app.post('/api/animals', (req, res) => {
 });
 
 
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/index.html'));
+});
+
+
+// ⬇︎ http://localhost:3001/animals
+app.get('/animals', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/animals.html'));
+});
+
+
+// ⬇︎ http://localhost:3001/zookeepers
+app.get('/zookeepers', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/zookeepers.html'));
+});
+
+
+// ⬇︎ wildcard route (* means any route entered un the url that's not found/this will bring u back to homepage)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/index.html'));
+});
 
 // —————————————————————————————————————————————————————————————————————————————————————————————
 
-// ⬇︎ LISTEN ROUTES
+// ⬇︎ LISTEN ROUTES ⬇︎
 app.listen(PORT, () => {
   console.log('API server now on port ${PORT}!');
 });
